@@ -62,20 +62,16 @@ class PBLooper {
         
         this.startX = cfg.startX || 250;
         this.startY = cfg.startY || 250;
-
-        console.log('quadrants', [cfg.quadrantNE, cfg.quadrantSE, cfg.quadrantSW, cfg.quadrantNW]);
-
-        const strokeColorArr = cfg.particleStrokeColorHex !== null ? this.colorHexToArr(cfg.particleStrokeColorHex) : null;
-        const x = this.colorHexToArr(cfg.particleColorHex);
-        console.log('x' ,x)
-
-        this.pb = new ParticleBlastr({
+        
+        let computedConfig = {
             canvas: this.canvas,
             quadrants: [cfg.quadrantNE, cfg.quadrantSE, cfg.quadrantSW, cfg.quadrantNW],
             particleColor: this.colorHexToArr(cfg.particleColorHex),
             particleStrokeColor: cfg.particleStrokeColorToggle ? this.colorHexToArr(cfg.particleStrokeColorHex) : null,
-            ...cfg
-        })
+            ...cfg,
+        };
+
+        this.pb = new ParticleBlastr(computedConfig)
     }
 
     setCanvas(canvas) {

@@ -319,8 +319,8 @@ function App() {
                 />
               </label>
 
-              <label htmlFor="particleSizeVariance" className="bugged hidden">
-                particleSizeVariance - doesn't set
+              <label htmlFor="particleSizeVariance" className="bugged">
+                particleSizeVariance - doesn't set?
                 <input
                   type="number"
                   id="particleSizeVariance"
@@ -349,6 +349,17 @@ function App() {
                 />
               </label>
               <br/>
+              <label htmlFor="particleStrokeColorToggle">
+                  use stroke color
+                  <input
+                    type="checkbox"
+                    name="particleStrokeColorToggle"
+                    value={particleStrokeColorToggle}
+                    defaultChecked={particleStrokeColorToggle}
+                    onChange={(e) => setParticleStrokeColorToggle(e.target.checked)}
+                  />
+              </label>
+              <br/>
               <label htmlFor="particleStrokeColorHex" >
                 particleStrokeColorHex
                 <input
@@ -357,15 +368,6 @@ function App() {
                   value={particleStrokeColorHex}
                   onChange={(e) => setParticleStrokeColorHex(e.target.value) }
                 />
-              </label>
-              <label htmlFor="particleStrokeColorToggle">
-                  <input
-                    type="checkbox"
-                    name="particleStrokeColorToggle"
-                    value={particleStrokeColorToggle}
-                    onChange={(e) => setParticleStrokeColorToggle(e.target.checked)}
-                  />
-                  use stroke color
               </label>
 
               <hr/>
@@ -379,7 +381,7 @@ function App() {
                   name="quadrantNW"
                   value={quadrantNW}
                   defaultChecked={quadrantNW}
-                  onChange={(e) => setQuadrantNW(e.target.checked) }//setQuadrantNW(e.target.checked)}
+                  onChange={(e) => setQuadrantNW(e.target.checked) }
                 />
               </label>
               <label htmlFor="quadrantNE">
@@ -464,8 +466,8 @@ function App() {
                 value={gravity}
                 onChange={(e) => { setGravity(e.target.value) }}
               />
-              <label htmlFor="gravityVariance" className="bugged hidden">
-                gravityVariance - doesn't un-set
+              <label htmlFor="gravityVariance" className="bugged">
+                gravityVariance - strange behavior?
                 <input
                   type="number"
                   id="gravityVariance"
