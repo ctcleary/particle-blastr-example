@@ -43,6 +43,19 @@ class PBLooper {
         clearTimeout(this.timeout);
     }
 
+    colorHexToArr(colorHex) {
+        const colorPieces = [
+            colorHex.substr(1).substr(0,2),
+            colorHex.substr(1).substr(2,2),
+            colorHex.substr(1).substr(4,2),
+        ]
+        return [
+            parseInt(colorPieces[0], 16),
+            parseInt(colorPieces[1], 16),
+            parseInt(colorPieces[2], 16),
+        ]
+    }
+
     setConfig(cfg) {
         this.stop();
         this.config = cfg;
@@ -52,21 +65,15 @@ class PBLooper {
 
         console.log('quadrants', [cfg.quadrantNE, cfg.quadrantSE, cfg.quadrantSW, cfg.quadrantNW]);
 
-        const colorPieces = [
-            cfg.particleColorHex.substr(1).substr(0,2),
-            cfg.particleColorHex.substr(1).substr(2,2),
-            cfg.particleColorHex.substr(1).substr(4,2),
-        ]
-        const colorArr = [
-            parseInt(colorPieces[0], 16),
-            parseInt(colorPieces[1], 16),
-            parseInt(colorPieces[2], 16),
-        ]
-        
+        const strokeColorArr = cfg.particleStrokeColorHex !== null ? this.colorHexToArr(cfg.particleStrokeColorHex) : null;
+        const x = this.colorHexToArr(cfg.particleColorHex);
+        console.log('x' ,x)
+
         this.pb = new ParticleBlastr({
             canvas: this.canvas,
             quadrants: [cfg.quadrantNE, cfg.quadrantSE, cfg.quadrantSW, cfg.quadrantNW],
-            particleColor: colorArr,
+            particleColor: this.colorHexToArr(cfg.particleColorHex),
+            particleStrokeColor: cfg.particleStrokeColorToggle ? this.colorHexToArr(cfg.particleStrokeColorHex) : null,
             ...cfg
         })
     }

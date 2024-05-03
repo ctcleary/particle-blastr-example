@@ -19,6 +19,8 @@ function App() {
   const [particleCount, setParticleCount] = useState(100)
   const [blastLengthMs, setBlastLengthMs] = useState(3000)
   const [particleColorHex, setParticleColorHex] = useState('#ff00ff')
+  const [particleStrokeColorHex, setParticleStrokeColorHex] = useState('#000000')
+  const [particleStrokeColorToggle, setParticleStrokeColorToggle] = useState(false)
   const [quadrantNE, setQuadrantNE] = useState(true)
   const [quadrantSE, setQuadrantSE] = useState(true)
   const [quadrantSW, setQuadrantSW] = useState(true)
@@ -64,6 +66,8 @@ function App() {
     particleCount,
     blastLengthMs,
     particleColorHex,
+    particleStrokeColorHex,
+    particleStrokeColorToggle,
     quadrantNE,
     quadrantSE,
     quadrantSW,
@@ -88,6 +92,18 @@ function App() {
     return typeof thing !== 'undefined';
   }
 
+  const colorArrToHex = (colorArr) => {
+    const hexArray = [
+      colorArr[0].toString(16),
+      colorArr[1].toString(16),
+      colorArr[2].toString(16),
+    ]
+    
+    // add preceding 0 if needed
+    const hexCode = hexArray.map((c) => (c.length === 1) ? '0'+c : c)
+    return '#'+hexCode.join('')
+  }
+
   const updateBlastr = () => {
     console.log('updateBlastr');
     if (configName !== 'custom') {
@@ -99,14 +115,13 @@ function App() {
       isDef(namedConfig.blastLengthMs) && setBlastLengthMs(namedConfig.blastLengthMs)
       
       if (isDef(namedConfig.particleColor)) {
-        const pC = namedConfig.particleColor;
-        let hC = [
-          pC[0].toString(16),
-          pC[1].toString(16),
-          pC[2].toString(16),
-        ]
-        hC = hC.map((c) => (c.length === 1) ? '0'+c : c)
-        setParticleColorHex('#'+hC.join(''))
+        setParticleColorHex( colorArrToHex(namedConfig.particleColor) )
+      }
+      if (isDef(namedConfig.particleStrokeColor)) {
+        setParticleStrokeColorToggle( true )
+        setParticleStrokeColorHex( colorArrToHex(namedConfig.particleStrokeColor) )
+      } else {
+        setParticleStrokeColorToggle( false );
       }
 
       if (isDef(namedConfig.quadrants)) {
@@ -144,6 +159,8 @@ function App() {
       blastLengthMs: blastLengthMs,
 
       particleColorHex: particleColorHex,
+      particleStrokeColorHex: particleStrokeColorHex,
+      particleStrokeColorToggle: particleStrokeColorToggle,
 
       quadrantNE: quadrantNE,
       quadrantSE: quadrantSE,
@@ -322,17 +339,37 @@ function App() {
               />
               <hr/>
 
-              <label
-                htmlFor="particleColorHex">
-                  particleColorHex
+              <label htmlFor="particleColorHex" >
+                particleColorHex
+                <input
+                  type="color"
+                  name="particleColorHex"
+                  value={particleColorHex}
+                  onChange={(e) => setParticleColorHex(e.target.value) }
+                />
+              </label>
+              <br/>
+              <label htmlFor="particleStrokeColorHex" >
+                particleStrokeColorHex
+                <input
+                  type="color"
+                  name="particleStrokeColorHex"
+                  value={particleStrokeColorHex}
+                  onChange={(e) => setParticleStrokeColorHex(e.target.value) }
+                />
+              </label>
+              <label htmlFor="particleStrokeColorToggle">
                   <input
-                    type="color"
-                    name="particleColorHex"
-                    value={particleColorHex}
-                    onChange={(e) => setParticleColorHex(e.target.value) }
+                    type="checkbox"
+                    name="particleStrokeColorToggle"
+                    value={particleStrokeColorToggle}
+                    onChange={(e) => setParticleStrokeColorToggle(e.target.checked)}
                   />
-                </label>
+                  use stroke color
+              </label>
+
               <hr/>
+
               emit quadrants
               <br/>
               <label htmlFor="quadrantNW">
