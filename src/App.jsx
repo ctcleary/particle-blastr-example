@@ -19,6 +19,11 @@ function App() {
   const [particleCount, setParticleCount] = useState(100)
   const [blastLengthMs, setBlastLengthMs] = useState(3000)
   const [particleColorHex, setParticleColorHex] = useState('#ff00ff')
+  const [particleMulticolorToggle, setParticleMulticolorToggle] = useState(false)
+  const [particleColorsHex1, setParticleColorsHex1] = useState('#ff0000')
+  const [particleColorsHex2, setParticleColorsHex2] = useState('#00ff00')
+  const [particleColorsHex3, setParticleColorsHex3] = useState('#0000ff')
+
   const [particleStrokeColorHex, setParticleStrokeColorHex] = useState('#000000')
   const [particleStrokeColorToggle, setParticleStrokeColorToggle] = useState(false)
   const [quadrantNE, setQuadrantNE] = useState(true)
@@ -66,6 +71,10 @@ function App() {
     particleCount,
     blastLengthMs,
     particleColorHex,
+    particleMulticolorToggle,
+    particleColorsHex1,
+    particleColorsHex2,
+    particleColorsHex3,
     particleStrokeColorHex,
     particleStrokeColorToggle,
     quadrantNE,
@@ -114,9 +123,18 @@ function App() {
       isDef(namedConfig.particleCount) && setParticleCount(namedConfig.particleCount)
       isDef(namedConfig.blastLengthMs) && setBlastLengthMs(namedConfig.blastLengthMs)
       
-      if (isDef(namedConfig.particleColor)) {
+      // preference given to multicolor
+      if (isDef(namedConfig.particleColors)) {
+        setParticleMulticolorToggle( true )
+        setParticleColorsHex1( colorArrToHex(namedConfig.particleColors[0]) )
+        setParticleColorsHex2( colorArrToHex(namedConfig.particleColors[1]) )
+        setParticleColorsHex3( colorArrToHex(namedConfig.particleColors[2]) )
+
+      } else if (isDef(namedConfig.particleColor)) {
+        setParticleMulticolorToggle( false )
         setParticleColorHex( colorArrToHex(namedConfig.particleColor) )
       }
+
       if (isDef(namedConfig.particleStrokeColor)) {
         setParticleStrokeColorToggle( true )
         setParticleStrokeColorHex( colorArrToHex(namedConfig.particleStrokeColor) )
@@ -159,6 +177,11 @@ function App() {
       blastLengthMs: blastLengthMs,
 
       particleColorHex: particleColorHex,
+      particleMulticolorToggle: particleMulticolorToggle,
+      particleColorsHex1: particleColorsHex1,
+      particleColorsHex2: particleColorsHex2,
+      particleColorsHex3: particleColorsHex3,
+
       particleStrokeColorHex: particleStrokeColorHex,
       particleStrokeColorToggle: particleStrokeColorToggle,
 
@@ -187,16 +210,21 @@ function App() {
     pbl.start()
   }
 
+  //hacky checkboxes fix
   useEffect(() => {
     document.querySelector('input[name="quadrantNE"]').checked = quadrantNE;
     document.querySelector('input[name="quadrantSE"]').checked = quadrantSE;
     document.querySelector('input[name="quadrantSW"]').checked = quadrantSW;
     document.querySelector('input[name="quadrantNW"]').checked = quadrantNW;
+    document.querySelector('input[name="particleMulticolorToggle"]').checked = particleMulticolorToggle;
+    document.querySelector('input[name="particleStrokeColorToggle"]').checked = particleStrokeColorToggle;
   }, [
     quadrantNE,
     quadrantSE,
     quadrantSW,
     quadrantNW,
+    particleMulticolorToggle,
+    particleStrokeColorToggle,
   ])
 
   return (
@@ -337,18 +365,71 @@ function App() {
                 value={particleEndScale}
                 onChange={(e) => { setParticleEndScale(e.target.value) }}
               />
+
               <hr/>
 
-              <label htmlFor="particleColorHex" >
-                particleColorHex
-                <input
-                  type="color"
-                  name="particleColorHex"
-                  value={particleColorHex}
-                  onChange={(e) => setParticleColorHex(e.target.value) }
-                />
+              <label htmlFor="particleMulticolorToggle">
+                use multicolor
+                  <input
+                    type="checkbox"
+                    name="particleMulticolorToggle"
+                    value={particleMulticolorToggle}
+                    defaultChecked={particleMulticolorToggle}
+                    onChange={(e) => setParticleMulticolorToggle(e.target.checked)}
+                  />
               </label>
               <br/>
+
+              { particleMulticolorToggle ?
+                <>
+                  <span><em>(actually supports <u>n</u> colors)</em></span>
+                  <br/>
+                  <label htmlFor="particleColorsHex1">
+                    particleColorsHex1
+                    <input
+                      type="color"
+                      name="particleColorsHex1"
+                      value={particleColorsHex1}
+                      onChange={(e) => setParticleColorsHex1(e.target.value) }
+                    />
+                  </label>
+                  <br/>
+                  <label htmlFor="particleColorsHex2">
+                    particleColorsHex2
+                    <input
+                      type="color"
+                      name="particleColorsHex2"
+                      value={particleColorsHex2}
+                      onChange={(e) => setParticleColorsHex2(e.target.value) }
+                    />
+                  </label>
+                  <br/>
+                  <label htmlFor="particleColorsHex3">
+                    particleColorsHex3
+                    <input
+                      type="color"
+                      name="particleColorsHex3"
+                      value={particleColorsHex3}
+                      onChange={(e) => setParticleColorsHex3(e.target.value) }
+                    />
+                  </label>
+                  <br/>
+                </>
+                :
+                <>
+                  <label htmlFor="particleColorHex">
+                    particleColorHex
+                    <input
+                      type="color"
+                      name="particleColorHex"
+                      value={particleColorHex}
+                      onChange={(e) => setParticleColorHex(e.target.value) }
+                    />
+                  </label>
+                  <br/>
+                </>
+              }
+               
               <label htmlFor="particleStrokeColorToggle">
                   use stroke color
                   <input

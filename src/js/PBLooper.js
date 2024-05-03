@@ -66,10 +66,19 @@ class PBLooper {
         let computedConfig = {
             canvas: this.canvas,
             quadrants: [cfg.quadrantNE, cfg.quadrantSE, cfg.quadrantSW, cfg.quadrantNW],
-            particleColor: this.colorHexToArr(cfg.particleColorHex),
             particleStrokeColor: cfg.particleStrokeColorToggle ? this.colorHexToArr(cfg.particleStrokeColorHex) : null,
             ...cfg,
-        };
+        }
+
+        if (cfg.particleMulticolorToggle) {
+            let result = [];
+            result[0] = this.colorHexToArr(cfg.particleColorsHex1)
+            result[1] = this.colorHexToArr(cfg.particleColorsHex2)
+            result[2] = this.colorHexToArr(cfg.particleColorsHex3)
+            computedConfig.particleColors = result;
+        } else {
+            computedConfig.particleColor = this.colorHexToArr(cfg.particleColorHex)
+        }
 
         this.pb = new ParticleBlastr(computedConfig)
     }

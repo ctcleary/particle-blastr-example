@@ -11,6 +11,11 @@ const pbExamples = {
       particleCount: 100,
 
       particleColor: [255, 0, 255],
+      particleColors: [
+        [255, 40, 0],
+        [250, 190, 50],
+        [240, 25, 150],
+      ],
 
       particleShape: ParticleBlastr.SHAPE.CIRCLE,
       particleRadius: 3,
@@ -101,10 +106,10 @@ const pbExamples = {
     },
     redBallBlast: {
         startX: 250,
-        startY: 250,
+        startY: 375,
         quadrants: [false, true, false, true],
   
-        particleCount: 65,
+        particleCount: 10,
   
         particleColor: [255, 0, 0],
         particleStrokeColor: [205, 60, 60],
@@ -115,13 +120,13 @@ const pbExamples = {
   
         particleEndScale: 10,
   
-        particleMaxDistance: 1260,
+        particleMaxDistance: 750,
         particleMinDistance: 50,
   
         blastLengthMs: 1800,
         
         gravity: -125,
-        gravityVariance: 0,
+        gravityVariance: 5,
 
       },
       blockFallBlast : {
