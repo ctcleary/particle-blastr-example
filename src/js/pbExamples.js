@@ -33,8 +33,6 @@ const pbExamples = {
     },
 
     megaBlast : {
-        // canvas: document.getElementById('demo-canvas'),
-        
         startX: 250,
         startY: 250,
         
@@ -68,7 +66,6 @@ const pbExamples = {
         gravityVariance: 0,
     },
     pinkPillBlast : {
-        // canvas: document.getElementById('demo-canvas'),
         startX: 25,
         startY: 250,
         
@@ -103,8 +100,6 @@ const pbExamples = {
         blastLengthMs: 2500,
     },
     redBallBlast: {
-        // canvas: document.getElementById('demo-canvas'),
-        
         startX: 250,
         startY: 250,
         quadrants: [false, true, false, true],
@@ -130,7 +125,6 @@ const pbExamples = {
 
       },
       blockFallBlast : {
-        // canvas: document.getElementById('demo-canvas'),
         startX: 250,
         startY: -150,
         
@@ -166,9 +160,7 @@ const pbExamples = {
         gravityVariance: 4000
     },
     /*
-    starBlast : {
-        canvas: document.getElementById('demo-canvas'),
-    
+    starBlast : {    
         quadrants: [true, false, false, true],
         
         particleCount: 75,
@@ -193,7 +185,6 @@ const pbExamples = {
     */
     /*
     smokeBlast : {
-        canvas: document.getElementById('demo-canvas'),
         startX: 250,
         startY: 400,
         quadrants: [true, true, true, true],

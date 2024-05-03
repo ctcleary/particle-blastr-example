@@ -62,8 +62,7 @@ class PBLooper {
             parseInt(colorPieces[1], 16),
             parseInt(colorPieces[2], 16),
         ]
-        console.log(colorPieces);
-        console.log(colorArr);
+        
         this.pb = new ParticleBlastr({
             canvas: this.canvas,
             quadrants: [cfg.quadrantNE, cfg.quadrantSE, cfg.quadrantSW, cfg.quadrantNW],

@@ -120,7 +120,7 @@ h1 {
   justify-content: center;
   
   flex: 2 2 60%;
-  background:url('./assets/checkerboard_cell.jpg') repeat white;
+  background:url('../public/assets/checkerboard_cell.jpg') repeat white;
 
 }
 
