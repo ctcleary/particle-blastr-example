@@ -62,8 +62,8 @@ const pbExamples = {
   
         particleStrokeColor: [235, 235, 255],
 
-        particleOpacity: 0.8,
-        particleEndOpacity: 0,
+        particleOpacity: 1,
+        particleEndOpacity: 1,
   
         particleMinDistance: 80,
         particleMaxDistance: 260,
@@ -126,7 +126,7 @@ const pbExamples = {
   
         particleOpacity: 1,
         particleEndOpacity: 0,
-        
+
         particleEndScale: 10,
   
         particleMaxDistance: 750,

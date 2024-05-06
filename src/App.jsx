@@ -244,12 +244,16 @@ function App() {
                 <h1>particle-blastr.js</h1>
             </header>
             <main>
-              <p>Preset Examples:</p>
+              <h2>Try one of the presets:</h2>
+              
               <Presets configNames={configNames} />
                 
               <hr/>
+              
+              <h2>Then fiddle with the controls!</h2>
+
               <label htmlFor="startX" className="">
-                startX
+                Blast center X
                 <input 
                   type="number"
                   id="startX"
@@ -258,7 +262,8 @@ function App() {
                   onChange={(e) => { setStartX(e.target.value) }}
                 />
               </label>
-              <label htmlFor="startY">startY
+              <label htmlFor="startY">
+                Blast center Y
                 <input
                   type="number"
                   id="startY"
@@ -267,7 +272,8 @@ function App() {
                   onChange={(e) => { setStartY(e.target.value) }}
                 />
               </label>
-              <label htmlFor="particleCount">particleCount
+              <label htmlFor="particleCount">
+                Particle Count
                 <input
                   type="number"
                   id="particleCount"
@@ -277,7 +283,7 @@ function App() {
                 />
               </label>
               <label htmlFor="blastLengthMs">
-                blastLengthMs
+                Blast Length (ms)
                 <input
                   type="number"
                   id="blastLengthMs"
@@ -286,10 +292,9 @@ function App() {
                   onChange={(e) => { setBlastLengthMs(e.target.value) }}
                 />
               </label>
-              <br/>
               <hr/>
               <label htmlFor="particleShape">
-                particleShape
+                Particle Shape
                 <select
                   id="particleShape"
                   name="particleShape"
@@ -308,8 +313,7 @@ function App() {
                 className={`${particleShape === ParticleBlastr.SHAPE.IMAGE ? '' : 'hidden'}`} 
                 htmlFor="particleImgName"
               >
-              <br/>
-                particleImgName
+                Particle Image Choice
                 <select
                   id="particleImgName"
                   name="particleImgName"
@@ -319,16 +323,16 @@ function App() {
                   <option value="starParticle">starParticle</option>
                   <option value="smokeParticle">smokeParticle</option>
                 </select>
-                <br/>
-                <em>(you can use your own image)</em>
               </label>
+              
+              <em>(you can use your own image)</em>
               <br/>
 
               <label
                 className={`${particleShape === ParticleBlastr.SHAPE.CIRCLE ? '' : 'hidden'}`} 
                 htmlFor="particleRadius"
               >
-                particleRadius
+                Particle Radius
                 <input
                   type="number"
                   id="particleRadius"
@@ -341,7 +345,7 @@ function App() {
                 className={`${particleShape === ParticleBlastr.SHAPE.SQUARE ? '' : 'hidden'}`} 
                 htmlFor="particleSize"
               >
-                particleSize
+                Particle Size (px)
                 <input
                   type="number"
                   id="particleSize"
@@ -354,7 +358,7 @@ function App() {
                 className={`${(particleShape === ParticleBlastr.SHAPE.RECT || particleShape === ParticleBlastr.SHAPE.ROUND_RECT || particleShape === ParticleBlastr.SHAPE.IMAGE) ? '' : 'hidden'}`} 
                 htmlFor="particleWidth"
               >
-                particleWidth
+                Particle Width (px)
                 <input
                   type="number"
                   id="particleWidth"
@@ -367,7 +371,7 @@ function App() {
                 className={`${(particleShape === ParticleBlastr.SHAPE.RECT || particleShape === ParticleBlastr.SHAPE.ROUND_RECT || particleShape === ParticleBlastr.SHAPE.IMAGE) ? '' : 'hidden'}`} 
                 htmlFor="particleHeight"
               >
-                particleHeight
+                Particle Height (px)
                 <input
                   type="number"
                   id="particleHeight"
@@ -380,7 +384,7 @@ function App() {
                 className={`${(particleShape === ParticleBlastr.SHAPE.ROUND_RECT) ? '' : 'hidden'}`} 
                 htmlFor="particleBorderRadius"
               >
-                particleBorderRadius
+                Particle Border Radius
                 <input
                   type="number"
                   id="particleBorderRadius"
@@ -391,7 +395,7 @@ function App() {
               </label>
 
               <label htmlFor="particleSizeVariance" className="">
-                particleSizeVariance
+                Particle Size Variance
                 <input 
                   type="number"
                   id="particleSizeVariance"
@@ -400,14 +404,16 @@ function App() {
                   onChange={(e) => { setParticleSizeVariance(e.target.value) }}
                 />
               </label>
-              <label htmlFor="particleEndScale">particleEndScale</label>
-              <input
-                type="number"
-                id="particleEndScale"
-                name="particleEndScale"
-                value={particleEndScale}
-                onChange={(e) => { setParticleEndScale(e.target.value) }}
-              />
+              <label htmlFor="particleEndScale">
+                Particle End Scale
+                <input
+                  type="number"
+                  id="particleEndScale"
+                  name="particleEndScale"
+                  value={particleEndScale}
+                  onChange={(e) => { setParticleEndScale(e.target.value) }}
+                />
+              </label>
 
               <hr/>
               <section id="color-selection"
@@ -415,7 +421,7 @@ function App() {
               >
 
                 <label htmlFor="particleMulticolorToggle">
-                  use multicolor
+                  Use multicolor?
                     <input
                       type="checkbox"
                       name="particleMulticolorToggle"
@@ -424,14 +430,13 @@ function App() {
                       onChange={(e) => setParticleMulticolorToggle(e.target.checked)}
                     />
                 </label>
-                <br/>
 
                 { particleMulticolorToggle ?
                   <>
                     <span><em>(actually supports <u>n</u> colors)</em></span>
                     <br/>
                     <label htmlFor="particleColorsHex1">
-                      particleColorsHex1
+                      Particle Color 1
                       <input
                         type="color"
                         name="particleColorsHex1"
@@ -439,9 +444,8 @@ function App() {
                         onChange={(e) => setParticleColorsHex1(e.target.value) }
                       />
                     </label>
-                    <br/>
                     <label htmlFor="particleColorsHex2">
-                      particleColorsHex2
+                      Particle Color 2
                       <input
                         type="color"
                         name="particleColorsHex2"
@@ -449,9 +453,8 @@ function App() {
                         onChange={(e) => setParticleColorsHex2(e.target.value) }
                       />
                     </label>
-                    <br/>
                     <label htmlFor="particleColorsHex3">
-                      particleColorsHex3
+                      Particle Color 3
                       <input
                         type="color"
                         name="particleColorsHex3"
@@ -459,12 +462,11 @@ function App() {
                         onChange={(e) => setParticleColorsHex3(e.target.value) }
                       />
                     </label>
-                    <br/>
                   </>
                   :
                   <>
                     <label htmlFor="particleColorHex">
-                      particleColorHex
+                      Particle Color
                       <input
                         type="color"
                         name="particleColorHex"
@@ -472,12 +474,11 @@ function App() {
                         onChange={(e) => setParticleColorHex(e.target.value) }
                       />
                     </label>
-                    <br/>
                   </>
                 }
-                
+                <br/>
                 <label htmlFor="particleStrokeColorToggle">
-                    use stroke color
+                    Use stroke color?
                     <input
                       type="checkbox"
                       name="particleStrokeColorToggle"
@@ -486,9 +487,8 @@ function App() {
                       onChange={(e) => setParticleStrokeColorToggle(e.target.checked)}
                     />
                 </label>
-                <br/>
                 <label htmlFor="particleStrokeColorHex" >
-                  particleStrokeColorHex
+                  Particle Stroke Color
                   <input
                     type="color"
                     name="particleStrokeColorHex"
@@ -496,76 +496,80 @@ function App() {
                     onChange={(e) => setParticleStrokeColorHex(e.target.value) }
                   />
                 </label>
+                <hr/>
               </section>
-              <hr/>
 
-              emit quadrants
+              Emitter quadrants
               <br/>
-              <label htmlFor="quadrantNW">
-                quadrantNW
-                <input
-                  type="checkbox"
-                  name="quadrantNW"
-                  value={quadrantNW}
-                  defaultChecked={quadrantNW}
-                  onChange={(e) => setQuadrantNW(e.target.checked) }
-                />
-              </label>
-              <label htmlFor="quadrantNE">
-                quadrantNE
-                <input
-                  type="checkbox"
-                  name="quadrantNE"
-                  value={quadrantNE}
-                  defaultChecked={quadrantNE}
-                  onChange={(e) => setQuadrantNE(e.target.checked)}
-                />
-              </label>
-              <br/>
-              <label htmlFor="quadrantSW">
-                quadrantSW
-                <input
-                  type="checkbox"
-                  name="quadrantSW"
-                  value={quadrantSW}
-                  defaultChecked={quadrantSW}
-                  onChange={(e) => setQuadrantSW(e.target.checked)}
-                />
-              </label>
-              <label htmlFor="quadrantSE">
-                quadrantSE
-                <input
-                  type="checkbox"
-                  name="quadrantSE"
-                  value={quadrantSE}
-                  defaultChecked={quadrantSE}
-                  onChange={(e) => setQuadrantSE(e.target.checked)}
-                />
-              </label>
-              
+              <section id="quadrant-selectors">
+                <label htmlFor="quadrantNW" className="quadrant quadrant-west quadrant-north">
+                  NW
+                  <input
+                    type="checkbox"
+                    name="quadrantNW"
+                    value={quadrantNW}
+                    defaultChecked={quadrantNW}
+                    onChange={(e) => setQuadrantNW(e.target.checked) }
+                  />
+                </label>
+                <label htmlFor="quadrantNE" className="quadrant quadrant-east quadrant-north">
+                  <input
+                    type="checkbox"
+                    name="quadrantNE"
+                    value={quadrantNE}
+                    defaultChecked={quadrantNE}
+                    onChange={(e) => setQuadrantNE(e.target.checked)}
+                  />
+                  NE
+                </label>
+                <br/>
+                <label htmlFor="quadrantSW" className="quadrant quadrant-west">
+                  SW
+                  <input
+                    type="checkbox"
+                    name="quadrantSW"
+                    value={quadrantSW}
+                    defaultChecked={quadrantSW}
+                    onChange={(e) => setQuadrantSW(e.target.checked)}
+                  />
+                </label>
+                <label htmlFor="quadrantSE" className="quadrant quadrant-east">
+                  <input
+                    type="checkbox"
+                    name="quadrantSE"
+                    value={quadrantSE}
+                    defaultChecked={quadrantSE}
+                    onChange={(e) => setQuadrantSE(e.target.checked)}
+                  />
+                  SE
+                </label>
+              </section>
               
               <hr/>
               
-              <label htmlFor="particleOpacity">particleOpacity</label>
-              <input
-                type="number"
-                id="particleOpacity"
-                name="particleOpacity"
-                value={particleOpacity}
-                onChange={(e) => { setParticleOpacity(e.target.value) }}
+              <label htmlFor="particleOpacity">
+                Particle Start Opacity
+                <input
+                  type="number"
+                  id="particleOpacity"
+                  name="particleOpacity"
+                  value={particleOpacity}
+                  onChange={(e) => { setParticleOpacity(e.target.value) }}
                 />
-              <label htmlFor="particleEndOpacity">particleEndOpacity</label>
-              <input
-                type="number"
-                id="particleEndOpacity"
-                name="particleEndOpacity"
-                value={particleEndOpacity}
-                onChange={(e) => { setParticleEndOpacity(e.target.value) }}
-              />
-                
+              </label>
+              <label htmlFor="particleEndOpacity">
+                Particle End Opacity
+                <input
+                  type="number"
+                  id="particleEndOpacity"
+                  name="particleEndOpacity"
+                  value={particleEndOpacity}
+                  onChange={(e) => { setParticleEndOpacity(e.target.value) }}
+                />
+              </label>
               <hr/>
               <label htmlFor="particleMinDistance" className="">
-                particleMinDistance
+                Particle Min. Distance (px)
                 <input 
                   type="number"
                   id="particleMinDistance"
@@ -574,7 +578,8 @@ function App() {
                   onChange={(e) => { setParticleMinDistance(e.target.value) }}
                 />
               </label>
-              <label htmlFor="particleMaxDistance">particleMaxDistance
+              <label htmlFor="particleMaxDistance">
+                Particle Max. Distance (px)
                 <input
                   type="number"
                   id="particleMaxDistance"
@@ -585,16 +590,18 @@ function App() {
               </label>
               
               <hr/>
-              <label htmlFor="gravity">gravity</label>
-              <input
-                type="number"
-                id="gravity"
-                name="gravity"
-                value={gravity}
-                onChange={(e) => { setGravity(e.target.value) }}
-              />
+              <label htmlFor="gravity">
+                Gravity
+                <input
+                  type="number"
+                  id="gravity"
+                  name="gravity"
+                  value={gravity}
+                  onChange={(e) => { setGravity(e.target.value) }}
+                />
+              </label>
               <label htmlFor="gravityVariance" className="">
-                gravityVariance
+                Gravity Variance
                 <input 
                   type="number"
                   id="gravityVariance"

@@ -104,7 +104,7 @@ h1 {
   
   /* max-height: 100vh;
   min-height: 500px; */
-  min-width: 260px;
+  min-width: 420px;
   /* overflow-y: scroll; */
   padding: 0 36px 36px 36px;
 }
@@ -131,8 +131,53 @@ h1 {
 #controls {
   background: #efe2e5;
 }
+#controls label {
+  display: flex;
+  text-align: right;
+  justify-content: flex-end;
+}
 
-#controls input[type="number"] {
-  display: block;
-  width: 100%;
+hr {
+  margin: 8px 0;
+}
+
+.setter-btn {
+  margin: 6px;
+}
+
+#controls input[type="number"], 
+#controls input[type="color"], 
+#controls select 
+{
+  min-width: 100px;
+  width: 120px;
+  margin-left: 16px;
+  /* flex-grow: 1; */
+  /* flex-shrink: 1; */
+}
+
+#controls input[type="checkbox"] {
+  margin: 6px;
+}
+
+#quadrant-selectors {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;;
+  max-width: 100%;
+}
+#controls .quadrant {
+  min-width: 50%;
+  padding: 6px;
+}
+
+#controls .quadrant-north {
+  border-bottom: 1px solid black;
+}
+#controls .quadrant-west {
+  border-right: 1px solid black;
+}
+#controls .quadrant-east {
+  justify-content: flex-start;
 }

@@ -4,7 +4,10 @@ const Presets = ({ configNames }) => {
   return (
     <div>
       {configNames.map((configName) => {
-        return <SetterButton key={configName} configName={configName} />;
+        return <SetterButton
+          key={configName}
+          configName={configName} 
+        />;
       })}
     </div>
   )
