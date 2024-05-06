@@ -190,8 +190,10 @@ class ParticleImage extends Particle {
     if (this.width && this.height) {
 
       let currScale = this.getCurrScale(lifetimeFactor);
+      const width = this.width * currScale;
+      const height = this.height * currScale;
+      ctx.drawImage(this.img, this.x - (width/2), this.y - (height/2), width, height);
       
-      ctx.drawImage(this.img, this.x, this.y, this.width * currScale, this.height * currScale);
     } else {
       ctx.drawImage(this.img, this.x, this.y);
     }
@@ -299,6 +301,7 @@ class ParticleRoundRect extends ParticleDrawn {
     this.width = cfg.width;
     this.height = cfg.height;
     this.borderRadius = cfg.borderRadius;
+    console.log('this.borderRadius', this.borderRadius);
   }
 
   animate(ctx, lifetimeFactor) {
@@ -409,40 +412,40 @@ class ParticleBlastr {
 
     if (cfg.backgroundImg) this.backgroundImg = cfg.backgroundImg;
 
-    if (cfg.particleCount) this.numPrts = cfg.particleCount;
+    if (cfg.particleCount) this.numPrts = parseInt(cfg.particleCount);
     if (cfg.particleShape) this.pShape  = cfg.particleShape;
-
-    if (!this.pShape) {
-        console.warn('Bad config for ParticleBlastr. {particleShape} required.');
-    }
 
     // Properties unique to shape type
     switch (this.pShape) {
       case ParticleBlastr.SHAPE.ROUND_RECT:
-        if (cfg.particleBorderRadius) this.pDimensions.borderRadius = cfg.particleBorderRadius;
+        if (cfg.particleBorderRadius) this.pDimensions.borderRadius = parseInt(cfg.particleBorderRadius);
         break;
       case ParticleBlastr.SHAPE.CIRCLE:
-        if (cfg.particleRadius) this.pDimensions.radius = cfg.particleRadius;
+        if (cfg.particleRadius) this.pDimensions.radius = parseInt(cfg.particleRadius);
         break;
       case ParticleBlastr.SHAPE.IMAGE:
-        if (cfg.pImg) this.pImg = cfg.particleImg;
+        if (cfg.particleImg) this.pImg = cfg.particleImg;
+        if (!this.pImg) {
+          console.log('this.pImg', this.pImg)
+          throw new Error('No particleImg provided.')
+        }
         break;
       default:
         break;
     }
 
     if (this.pShape == ParticleBlastr.SHAPE.SQUARE) {
-      this.pDimensions.width  = cfg.particleSize;
-      this.pDimensions.height = cfg.particleSize;
+      this.pDimensions.width  = parseInt(cfg.particleSize);
+      this.pDimensions.height = parseInt(cfg.particleSize);
     } else if (this.pShape != ParticleBlastr.SHAPE.CIRCLE) {
-      this.pDimensions.width  = cfg.particleWidth;
-      this.pDimensions.height = cfg.particleHeight;
+      this.pDimensions.width  = parseInt(cfg.particleWidth);
+      this.pDimensions.height = parseInt(cfg.particleHeight);
     }
 
-    if (cfg.particleSizeVariance) this.pDimensions.sizeVariance = cfg.particleSizeVariance;
-    if (cfg.particleProportionalSizeVariance) this.pDimensions.proportionalSizeVariance = cfg.particleProportionalSizeVariance
+    if (cfg.particleSizeVariance) this.pDimensions.sizeVariance = parseInt(cfg.particleSizeVariance);
+    if (cfg.particleProportionalSizeVariance) this.pDimensions.proportionalSizeVariance = cfg.particleProportionalSizeVariance;
 
-    if (ParticleBlastr.util.isDef(cfg.particleEndScale)) this.pDimensions.particleEndScale = cfg.particleEndScale;
+    if (ParticleBlastr.util.isDef(cfg.particleEndScale)) this.pDimensions.particleEndScale = parseFloat(cfg.particleEndScale);
 
     if (this.pShape != ParticleBlastr.SHAPE.IMAGE) {
       if (cfg.particleColor) {
@@ -456,20 +459,23 @@ class ParticleBlastr {
       if (cfg.particleStrokeColor) this.pStrokeColor = cfg.particleStrokeColor;
     }
 
-    this.pOpacity    = cfg.particleOpacity || 1;
-    this.pEndOpacity = cfg.particleEndOpacity || 0;
+    this.pOpacity    = parseFloat(cfg.particleOpacity) || 1;
+    this.pEndOpacity = parseFloat(cfg.particleEndOpacity) || 0;
 
-    if (cfg.particleMaxDistance) this.pMaxDist = cfg.particleMaxDistance;
-    if (cfg.particleMinDistance) this.pMinDist = cfg.particleMinDistance;
+    if (cfg.particleMaxDistance) this.pMaxDist = parseInt(cfg.particleMaxDistance);
+    if (cfg.particleMinDistance) this.pMinDist = parseInt(cfg.particleMinDistance);
 
-    if (ParticleBlastr.util.isDef(cfg.gravity))   this.pGravity   = cfg.gravity;
-    if (cfg.gravityVariance) this.gravityVariance = cfg.gravityVariance;
+    if (ParticleBlastr.util.isDef(cfg.gravity))   this.pGravity   = parseInt(cfg.gravity);
+    if (cfg.gravityVariance) this.gravityVariance = parseInt(cfg.gravityVariance);
 
     if (cfg.quadrants) this.quadrants = cfg.quadrants;
 
     if (cfg.compositeOperation) this.compositeOperation = cfg.compositeOperation;
 
-    if (cfg.blastLengthMs) this.blastLengthMs = cfg.blastLengthMs;
+    if (cfg.blastLengthMs) this.blastLengthMs = parseInt(cfg.blastLengthMs);
+
+    if (ParticleBlastr.util.isDef(cfg.startX)) this.startX = this.originX = parseInt(cfg.startX);
+    if (ParticleBlastr.util.isDef(cfg.startY)) this.startY = this.originY = parseInt(cfg.startY);
 
     this.generatePrts();
   }
@@ -513,8 +519,8 @@ class ParticleBlastr {
 
       // Handle sizeVariance randomization
       // if (this.pDimensions.sizeVariance) {
-      if (this.sizeVariance) {
-        const changeBy = Math.random() * this.sizeVariance;
+      if (this.pDimensions.sizeVariance) {
+        const changeBy = Math.random() * this.pDimensions.sizeVariance;
 
         if (this.pShape == ParticleBlastr.SHAPE.CIRCLE) {
           let newRadius = pCfg.radius;
@@ -627,9 +633,11 @@ class ParticleBlastr {
   }
 
   startBlast(centerX, centerY) {
-    if (this.doDebug) console.log("Start blast! At:", centerX, centerY);
-    this.originX = centerX;
-    this.originY = centerY;
+    // Allow per-blast override of set startX/Y
+    this.originX = (centerX) ? parseInt(centerX) : this.startX;
+    this.originY = (centerY) ? parseInt(centerY) : this.startY;
+
+    if (this.doDebug) console.log("Start blast! At:", this.originX, this.originY);
 
     this.done = false;
     this.startTime = performance.now();
@@ -667,13 +675,14 @@ class ParticleBlastr {
     this.prts.forEach((p) => {
       p.animate(this.ctx, ParticleBlastr.util.clamp(lifetimeFactor, 0, 1));
     });
-
+ 
     // Kill loop if done.
     if (overtime) {
-      if (this.doDebug) console.log("Overtime! Reset ParticleBlastr.");
       this.reset();
     } else {
-      requestAnimationFrame(() => { this.handleFrame() });
+      requestAnimationFrame(() => { 
+          this.handleFrame() 
+      });
     }
   }
 

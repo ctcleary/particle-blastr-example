@@ -29,7 +29,7 @@ class PBLooper {
 
         if (this.isRunning) {
             this.timeout = setTimeout(this.runLoop.bind(this), this.config.blastLengthMs)
-            this.pb.startBlast(this.startX, this.startY);
+            this.pb.startBlast();
         }
     }
 
@@ -60,8 +60,8 @@ class PBLooper {
         this.stop();
         this.config = cfg;
         
-        this.startX = cfg.startX || 250;
-        this.startY = cfg.startY || 250;
+        // this.startX = cfg.startX || 250;
+        // this.startY = cfg.startY || 250;
         
         let computedConfig = {
             canvas: this.canvas,
@@ -80,6 +80,21 @@ class PBLooper {
             computedConfig.particleColor = this.colorHexToArr(cfg.particleColorHex)
         }
 
+        if (cfg.particleShape = ParticleBlastr.SHAPE.IMAGE) {
+            let result = document.createElement('img');
+            switch (cfg.particleImgName) {
+                case 'smokeParticle':
+                    result.src = './assets/smokeParticle_100x100.png';
+                    break;
+                case 'starParticle':
+                default:
+                    result.src = './assets/starParticle_20x20.png';
+                    break;
+            }
+
+            computedConfig.particleImg = result;
+        }
+
         this.pb = new ParticleBlastr(computedConfig)
     }
 
@@ -88,10 +103,10 @@ class PBLooper {
         this.canvas = canvas;
     }
 
-    setXY(x, y) {
-        this.startX = x;
-        this.startY = y;
-    }
+    // setXY(x, y) {
+    //     this.startX = x;
+    //     this.startY = y;
+    // }
 }
 
 export default PBLooper

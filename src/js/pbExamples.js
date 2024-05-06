@@ -38,7 +38,7 @@ const pbExamples = {
     },
 
     megaBlast : {
-        startX: 250,
+        startX: 100,
         startY: 250,
         
         particleCount: 300,
@@ -61,6 +61,9 @@ const pbExamples = {
         particleEndScale: 0.15,
   
         particleStrokeColor: [235, 235, 255],
+
+        particleOpacity: 0.8,
+        particleEndOpacity: 0,
   
         particleMinDistance: 80,
         particleMaxDistance: 260,
@@ -92,6 +95,9 @@ const pbExamples = {
         particleHeight: 16,
         particleBorderRadius: 25,
         particleSizeVariance: 3,
+
+        particleOpacity: 1,
+        particleEndOpacity: 1,
   
         particleEndScale: 0.25,
         particleEndOpacity: 1,
@@ -116,8 +122,11 @@ const pbExamples = {
   
         particleShape: ParticleBlastr.SHAPE.CIRCLE,
         particleRadius: 2,
-        particleSizeVariance: 4,
+        particleSizeVariance: 2,
   
+        particleOpacity: 1,
+        particleEndOpacity: 0,
+        
         particleEndScale: 10,
   
         particleMaxDistance: 750,
@@ -125,8 +134,8 @@ const pbExamples = {
   
         blastLengthMs: 1800,
         
-        gravity: -125,
-        gravityVariance: 5,
+        gravity: -525,
+        gravityVariance: 50,
 
       },
       blockFallBlast : {
@@ -164,20 +173,24 @@ const pbExamples = {
         gravity: 8000,
         gravityVariance: 4000
     },
-    /*
-    starBlast : {    
+    starBlast : {   
+        startX: 250,
+        startY: 250, 
         quadrants: [true, false, false, true],
         
         particleCount: 75,
     
         particleShape: ParticleBlastr.SHAPE.IMAGE,
-        particleImg: document.getElementById('starParticle'),
-        particleWidth:  50,
-        particleHeight: 50,
+        // particleImg: document.getElementById('starParticle'),
+        particleImgName: 'starParticle',
+        particleWidth:  25,
+        particleHeight: 25,
         particleSizeVariance: 25,
         particleProportionalSizeVariance: true,
     
+        particleOpacity: 1,
         particleEndOpacity: 1,
+        particleEndScale: 0,
     
         particleMaxDistance: 580,
         particleMinDistance: 40,
@@ -185,10 +198,8 @@ const pbExamples = {
         gravity: 1500,
         gravityVariance: 500,
     
-        blastLengthMs: blastLength,
+        blastLengthMs: 2000,
     },
-    */
-    /*
     smokeBlast : {
         startX: 250,
         startY: 400,
@@ -198,14 +209,15 @@ const pbExamples = {
         particleColor: [80, 80, 83],
   
         particleOpacity: 0.2,
-        particleEndOpactiy: 0,
+        particleEndOpacity: 0,
 
   
         particleShape: ParticleBlastr.SHAPE.IMAGE,
-        particleImg: document.getElementById('smokeParticle'),
+        // particleImg: document.getElementById('smokeParticle'),
+        particleImgName: 'smokeParticle',
         particleWidth: 12,
         particleHeight: 12,
-        particleSizeVariance: 50,
+        particleSizeVariance: 5,
   
         particleEndScale: 10,
   
@@ -215,9 +227,8 @@ const pbExamples = {
         gravity: -2600,
         gravityVariance: 1200,
 
-        blastLengthMs: blastLength,
+        blastLengthMs: 2500,
     },
-    */
 };
 
 export default pbExamples;

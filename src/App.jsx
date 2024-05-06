@@ -31,10 +31,12 @@ function App() {
   const [quadrantSW, setQuadrantSW] = useState(true)
   const [quadrantNW, setQuadrantNW] = useState(true)
   const [particleShape, setParticleShape] = useState(ParticleBlastr.SHAPE.CIRCLE)
+  const [particleImgName, setParticleImgName] = useState('star')
   const [particleRadius, setParticleRadius] = useState(3)
   const [particleSize, setParticleSize] = useState(10)
   const [particleWidth, setParticleWidth] = useState(10)
   const [particleHeight, setParticleHeight] = useState(10)
+  const [particleBorderRadius, setParticleBorderRadius] = useState(10)
   const [particleSizeVariance, setParticleSizeVariance] = useState(0)
   const [particleEndScale, setParticleEndScale] = useState(1)
   const [particleOpacity, setParticleOpacity] = useState(1)
@@ -82,10 +84,12 @@ function App() {
     quadrantSW,
     quadrantNW,
     particleShape,
+    particleImgName,
     particleRadius,
     particleSize,
     particleWidth,
     particleHeight,
+    particleBorderRadius,
     particleSizeVariance,
     particleEndScale,
     particleOpacity,
@@ -150,10 +154,12 @@ function App() {
       }
 
       isDef(namedConfig.particleShape) && setParticleShape(namedConfig.particleShape)
+      isDef(namedConfig.particleImgName) && setParticleImgName(namedConfig.particleImgName)
       isDef(namedConfig.particleRadius) && setParticleRadius(namedConfig.particleRadius)
       isDef(namedConfig.particleSize) && setParticleSize(namedConfig.particleSize)
       isDef(namedConfig.particleWidth) && setParticleWidth(namedConfig.particleWidth)
       isDef(namedConfig.particleHeight) && setParticleHeight(namedConfig.particleHeight)
+      isDef(namedConfig.particleBorderRadius) && setParticleBorderRadius(namedConfig.particleBorderRadius)
       isDef(namedConfig.particleSizeVariance) && setParticleSizeVariance(namedConfig.particleSizeVariance)
       isDef(namedConfig.particleEndScale) && setParticleEndScale(namedConfig.particleEndScale)
 
@@ -191,10 +197,12 @@ function App() {
       quadrantNW: quadrantNW,
 
       particleShape: particleShape,
+      particleImgName: particleImgName,
       particleRadius: particleRadius,
       particleSize: particleSize,
       particleWidth: particleWidth,
       particleHeight: particleHeight,
+      particleBorderRadius: particleBorderRadius,
       particleSizeVariance: particleSizeVariance,
       particleEndScale: particleEndScale,
 
@@ -240,14 +248,15 @@ function App() {
               <Presets configNames={configNames} />
                 
               <hr/>
-              <label htmlFor="startX">startX
-              <input
-                type="number"
-                id="startX"
-                name="startX"
-                value={startX}
-                onChange={(e) => { setStartX(e.target.value) }}
-              />
+              <label htmlFor="startX" className="">
+                startX
+                <input 
+                  type="number"
+                  id="startX"
+                  name="startX"
+                  value={startX}
+                  onChange={(e) => { setStartX(e.target.value) }}
+                />
               </label>
               <label htmlFor="startY">startY
                 <input
@@ -277,21 +286,42 @@ function App() {
                   onChange={(e) => { setBlastLengthMs(e.target.value) }}
                 />
               </label>
-
+              <br/>
               <hr/>
-              setParticleShape
-              <select
-                name="particleShape"
-                value={particleShape}
-                onChange={(e) => {
-                  console.log('e.target.value', e.target.value);
-                    setParticleShape(e.target.value) }}
+              <label htmlFor="particleShape">
+                particleShape
+                <select
+                  id="particleShape"
+                  name="particleShape"
+                  value={particleShape}
+                  onChange={(e) => { setParticleShape(e.target.value) }}
+                >
+                  <option value={ParticleBlastr.SHAPE.IMAGE}>{ParticleBlastr.SHAPE.IMAGE}</option>
+                  <option value={ParticleBlastr.SHAPE.CIRCLE}>{ParticleBlastr.SHAPE.CIRCLE}</option>
+                  <option value={ParticleBlastr.SHAPE.SQUARE}>{ParticleBlastr.SHAPE.SQUARE}</option>
+                  <option value={ParticleBlastr.SHAPE.RECT}>{ParticleBlastr.SHAPE.RECT}</option>
+                  <option value={ParticleBlastr.SHAPE.ROUND_RECT}>{ParticleBlastr.SHAPE.ROUND_RECT}</option>
+                </select>
+              </label>
+
+              <label
+                className={`${particleShape === ParticleBlastr.SHAPE.IMAGE ? '' : 'hidden'}`} 
+                htmlFor="particleImgName"
               >
-                <option value={ParticleBlastr.SHAPE.CIRCLE}>{ParticleBlastr.SHAPE.CIRCLE}</option>
-                <option value={ParticleBlastr.SHAPE.SQUARE}>{ParticleBlastr.SHAPE.SQUARE}</option>
-                <option value={ParticleBlastr.SHAPE.RECT}>{ParticleBlastr.SHAPE.RECT}</option>
-                <option value={ParticleBlastr.SHAPE.ROUND_RECT}>{ParticleBlastr.SHAPE.ROUND_RECT}</option>
-              </select>
+              <br/>
+                particleImgName
+                <select
+                  id="particleImgName"
+                  name="particleImgName"
+                  value={particleImgName}
+                  onChange={(e) => { setParticleImgName(e.target.value) }}
+                >
+                  <option value="starParticle">starParticle</option>
+                  <option value="smokeParticle">smokeParticle</option>
+                </select>
+                <br/>
+                <em>(you can use your own image)</em>
+              </label>
               <br/>
 
               <label
@@ -346,10 +376,23 @@ function App() {
                   onChange={(e) => { setParticleHeight(e.target.value) }}
                 />
               </label>
-
-              <label htmlFor="particleSizeVariance" className="bugged">
-                particleSizeVariance - doesn't set?
+              <label
+                className={`${(particleShape === ParticleBlastr.SHAPE.ROUND_RECT) ? '' : 'hidden'}`} 
+                htmlFor="particleBorderRadius"
+              >
+                particleBorderRadius
                 <input
+                  type="number"
+                  id="particleBorderRadius"
+                  name="particleBorderRadius"
+                  value={particleBorderRadius}
+                  onChange={(e) => { setParticleBorderRadius(e.target.value) }}
+                />
+              </label>
+
+              <label htmlFor="particleSizeVariance" className="">
+                particleSizeVariance
+                <input 
                   type="number"
                   id="particleSizeVariance"
                   name="particleSizeVariance"
@@ -367,90 +410,93 @@ function App() {
               />
 
               <hr/>
+              <section id="color-selection"
+                className={`${particleShape === ParticleBlastr.SHAPE.IMAGE ? 'hidden' : ''}`}
+              >
 
-              <label htmlFor="particleMulticolorToggle">
-                use multicolor
+                <label htmlFor="particleMulticolorToggle">
+                  use multicolor
+                    <input
+                      type="checkbox"
+                      name="particleMulticolorToggle"
+                      value={particleMulticolorToggle}
+                      defaultChecked={particleMulticolorToggle}
+                      onChange={(e) => setParticleMulticolorToggle(e.target.checked)}
+                    />
+                </label>
+                <br/>
+
+                { particleMulticolorToggle ?
+                  <>
+                    <span><em>(actually supports <u>n</u> colors)</em></span>
+                    <br/>
+                    <label htmlFor="particleColorsHex1">
+                      particleColorsHex1
+                      <input
+                        type="color"
+                        name="particleColorsHex1"
+                        value={particleColorsHex1}
+                        onChange={(e) => setParticleColorsHex1(e.target.value) }
+                      />
+                    </label>
+                    <br/>
+                    <label htmlFor="particleColorsHex2">
+                      particleColorsHex2
+                      <input
+                        type="color"
+                        name="particleColorsHex2"
+                        value={particleColorsHex2}
+                        onChange={(e) => setParticleColorsHex2(e.target.value) }
+                      />
+                    </label>
+                    <br/>
+                    <label htmlFor="particleColorsHex3">
+                      particleColorsHex3
+                      <input
+                        type="color"
+                        name="particleColorsHex3"
+                        value={particleColorsHex3}
+                        onChange={(e) => setParticleColorsHex3(e.target.value) }
+                      />
+                    </label>
+                    <br/>
+                  </>
+                  :
+                  <>
+                    <label htmlFor="particleColorHex">
+                      particleColorHex
+                      <input
+                        type="color"
+                        name="particleColorHex"
+                        value={particleColorHex}
+                        onChange={(e) => setParticleColorHex(e.target.value) }
+                      />
+                    </label>
+                    <br/>
+                  </>
+                }
+                
+                <label htmlFor="particleStrokeColorToggle">
+                    use stroke color
+                    <input
+                      type="checkbox"
+                      name="particleStrokeColorToggle"
+                      value={particleStrokeColorToggle}
+                      defaultChecked={particleStrokeColorToggle}
+                      onChange={(e) => setParticleStrokeColorToggle(e.target.checked)}
+                    />
+                </label>
+                <br/>
+                <label htmlFor="particleStrokeColorHex" >
+                  particleStrokeColorHex
                   <input
-                    type="checkbox"
-                    name="particleMulticolorToggle"
-                    value={particleMulticolorToggle}
-                    defaultChecked={particleMulticolorToggle}
-                    onChange={(e) => setParticleMulticolorToggle(e.target.checked)}
+                    type="color"
+                    name="particleStrokeColorHex"
+                    value={particleStrokeColorHex}
+                    onChange={(e) => setParticleStrokeColorHex(e.target.value) }
                   />
-              </label>
-              <br/>
-
-              { particleMulticolorToggle ?
-                <>
-                  <span><em>(actually supports <u>n</u> colors)</em></span>
-                  <br/>
-                  <label htmlFor="particleColorsHex1">
-                    particleColorsHex1
-                    <input
-                      type="color"
-                      name="particleColorsHex1"
-                      value={particleColorsHex1}
-                      onChange={(e) => setParticleColorsHex1(e.target.value) }
-                    />
-                  </label>
-                  <br/>
-                  <label htmlFor="particleColorsHex2">
-                    particleColorsHex2
-                    <input
-                      type="color"
-                      name="particleColorsHex2"
-                      value={particleColorsHex2}
-                      onChange={(e) => setParticleColorsHex2(e.target.value) }
-                    />
-                  </label>
-                  <br/>
-                  <label htmlFor="particleColorsHex3">
-                    particleColorsHex3
-                    <input
-                      type="color"
-                      name="particleColorsHex3"
-                      value={particleColorsHex3}
-                      onChange={(e) => setParticleColorsHex3(e.target.value) }
-                    />
-                  </label>
-                  <br/>
-                </>
-                :
-                <>
-                  <label htmlFor="particleColorHex">
-                    particleColorHex
-                    <input
-                      type="color"
-                      name="particleColorHex"
-                      value={particleColorHex}
-                      onChange={(e) => setParticleColorHex(e.target.value) }
-                    />
-                  </label>
-                  <br/>
-                </>
-              }
-               
-              <label htmlFor="particleStrokeColorToggle">
-                  use stroke color
-                  <input
-                    type="checkbox"
-                    name="particleStrokeColorToggle"
-                    value={particleStrokeColorToggle}
-                    defaultChecked={particleStrokeColorToggle}
-                    onChange={(e) => setParticleStrokeColorToggle(e.target.checked)}
-                  />
-              </label>
-              <br/>
-              <label htmlFor="particleStrokeColorHex" >
-                particleStrokeColorHex
-                <input
-                  type="color"
-                  name="particleStrokeColorHex"
-                  value={particleStrokeColorHex}
-                  onChange={(e) => setParticleStrokeColorHex(e.target.value) }
-                />
-              </label>
-
+                </label>
+              </section>
               <hr/>
 
               emit quadrants
@@ -518,9 +564,9 @@ function App() {
               />
                 
               <hr/>
-              <label htmlFor="particleMinDistance" className="bugged">
-                particleMinDistance - strange behavior?
-                <input
+              <label htmlFor="particleMinDistance" className="">
+                particleMinDistance
+                <input 
                   type="number"
                   id="particleMinDistance"
                   name="particleMinDistance"
@@ -547,9 +593,9 @@ function App() {
                 value={gravity}
                 onChange={(e) => { setGravity(e.target.value) }}
               />
-              <label htmlFor="gravityVariance" className="bugged">
-                gravityVariance - strange behavior?
-                <input
+              <label htmlFor="gravityVariance" className="">
+                gravityVariance
+                <input 
                   type="number"
                   id="gravityVariance"
                   name="gravityVariance"
